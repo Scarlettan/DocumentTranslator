@@ -11,6 +11,7 @@ Software that translates files and documents
 The generated output file may show errors when opening through their default programs. It could either be caused by:
 - Character Limits (esp. in sheet names), as the translated words/sentences can be far longer than the original
 - Broken Spreadsheet Formulas, this can be caused by the spacing between the symbols after translation
+
 For the most part, the errors can be ignored unless the file is rendered unreadable. Note that this translation tool is intended only for reference, and does not guarantee perfect translation of the source material.
 
 ###### Disclaimer
