@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="450.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="documenttranslator.controllers.TermListController">
+   <children>
+      <HBox spacing="10.0">
+         <children>
+            <FlowPane hgap="10.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="Copy the terms on the left and&#10;run them through Google Translate." />
+               </children>
+            </FlowPane>
+            <FlowPane HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="Copy the translated text from Google Translate&#10;and paste them on the right.&#10;" wrapText="true" />
+               </children>
+            </FlowPane>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
+      <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+         <content>
+            <VBox fx:id="inputTermsContainer" spacing="10.0">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</VBox>
