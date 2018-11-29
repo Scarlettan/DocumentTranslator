@@ -10,7 +10,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- *
+ * Extracts words from Strings
+ * 
  * @author joni.jinon
  */
 public abstract class BaseInterpreter {

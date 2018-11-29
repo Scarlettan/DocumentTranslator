@@ -92,7 +92,7 @@ public class TranslateCompleteController implements BaseController {
 
 	@Override
 	public void onBack(MainWindowController c, TranslateRequest tr) {
-		
+		c.setCurrentScreen(Screen.TranslateSettings);
 	}
 
 	@Override

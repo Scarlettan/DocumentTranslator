@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 /**
@@ -27,6 +28,8 @@ public class TranslateSettingsController implements BaseController {
 	private TextField inputOutputFile;
 	@FXML
 	private Button buttonSelectOutputFile;
+	@FXML
+	private VBox moreSettingsPane;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -41,11 +44,15 @@ public class TranslateSettingsController implements BaseController {
 		c.getButtonNext().requestFocus();
 		
 		this.buttonSelectOutputFile.setOnAction(e -> this.selectOutputFile(tr));
+		
+		this.moreSettingsPane.getChildren().clear();
+		tr.getProcessor().onLoadMoreSettings(this.moreSettingsPane);
+		
 	}
 
 	@Override
 	public void onBack(MainWindowController c, TranslateRequest tr) {
-
+		c.setCurrentScreen(Screen.TermList);
 	}
 
 	@Override
@@ -55,6 +62,7 @@ public class TranslateSettingsController implements BaseController {
 
 	@Override
 	public void onConfirm(MainWindowController c, TranslateRequest tr) {
+		tr.setOutputFile(new File(this.inputOutputFile.getText()));
 		c.setCurrentScreen(Screen.TranslateComplete);
 	}
 
@@ -88,11 +96,7 @@ public class TranslateSettingsController implements BaseController {
 		File target = fileChooser.showSaveDialog(this.inputOutputFile.getScene().getWindow());
 
 		if (target != null) {
-
-			Spy.log().toConsole().asInfo("Selected Target: " + target.getName());
-
-			Spy.log().toConsole().asInfo("TODO: Find and replace terms");
-
+			this.inputOutputFile.setText(target.getAbsolutePath());
 		}
 	}
 	

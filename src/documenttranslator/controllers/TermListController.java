@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -27,6 +26,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -112,9 +112,18 @@ public class TermListController implements BaseController {
 			TextArea translated = (TextArea)row.get(1);
 			
 			List<String> termList = Arrays.asList(terms.getText().split("\n"));
-			List<String> translatedList = Arrays.asList(translated.getText().split("\n"));
+			List<String> translatedList = new ArrayList<>(Arrays.asList(translated.getText().split("\n")));
 			
 			for (int s = 0, e = termList.size(); s < e; s++) {
+				if(s == e - 1 && translatedList.size() == e - 1) {
+					if(termList.get(s).equals("\u3000") || termList.get(s).equals(" ")) {
+						translatedList.add(" ");
+					} else {
+						JOptionPane.showMessageDialog(null, "Insufficient translated terms!", "Error", JOptionPane.ERROR_MESSAGE);
+						tr.getInterpreter().getDictionary().clear();
+						return;
+					}
+				}
 				tr.getInterpreter().getDictionary().put(termList.get(s), translatedList.get(s));
 			}
 			

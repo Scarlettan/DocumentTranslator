@@ -15,7 +15,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -108,13 +107,16 @@ public class FileBasketController implements BaseController {
 
 	@Override
 	public void onEnter(MainWindowController c, TranslateRequest tr) {
+		
+		c.getButtonNext().setDisable(true);
+		c.getButtonBack().setDisable(true);
+		
 		this.inputFileUrl.setText("");
-
+		
 		if (tr.getInputFile() != null) {
 			this.inputFileUrl.setText(tr.getInputFile().getAbsolutePath());
+			c.getButtonNext().setDisable(false);
 		}
-
-		c.getButtonBack().setDisable(true);
 
 		this.inputDropBox.setOnDragDropped((DragEvent event) -> {
 			Dragboard db = event.getDragboard();
@@ -191,6 +193,7 @@ public class FileBasketController implements BaseController {
 
 	@Override
 	public void onExit(MainWindowController c, TranslateRequest tr) {
+		c.getButtonNext().setDisable(false);
 		c.getButtonBack().setDisable(false);
 	}
 

@@ -6,15 +6,23 @@
 package documenttranslator.processors;
 
 import documenttranslator.forms.TranslateRequest;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 /**
- *
+ * Reads files and extracts Strings
+ * Replaces Strings and writes file
+ * 
  * @author joni.jinon
  */
 public abstract class BaseProcessor {
 	
 	public BaseProcessor() {
 
+	}
+	
+	public void onLoadMoreSettings(VBox moreSettingsPane) {
+		moreSettingsPane.getChildren().add(new Label("No additional configuration for this module."));
 	}
 
 	public abstract AbstractTask getReadFileTask(TranslateRequest tr);

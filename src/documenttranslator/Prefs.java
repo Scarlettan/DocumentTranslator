@@ -13,7 +13,7 @@ import java.io.File;
  */
 public final class Prefs {
 	
-	public static final String DIR_APP			= "app" + File.separator;
+	public static final String DIR_APP			= "DocumentTranslator-Temp" + File.separator;
 	
 	public static final String DIR_JOBS			= Prefs.DIR_APP + "jobs" + File.separator;
 	public static final String DIR_JOBPREFIX	= "job";

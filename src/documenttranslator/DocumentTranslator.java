@@ -19,39 +19,32 @@ import javafx.stage.Stage;
  * @author joni.jinon
  */
 public class DocumentTranslator extends Application {
-    
-    @Override
-    public void start(Stage stage) throws Exception {
-		
-		// Preload
-		File jobs = new File(Prefs.DIR_JOBS);
-		if(jobs.isDirectory()) {
-			long expiry = LocalDateTime.now().minusDays(2).getNano();
-			for(File f : jobs.listFiles()) {
-				if(f.isDirectory() && f.lastModified() < expiry) {
-					FileTools.deleteFilesRecursive(f);
-				}
-			}
-		}
-		
-        Parent root = FXMLLoader.load(getClass().getResource("/documenttranslator/fxml/MainWindow.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-		stage.setTitle("Document Translator");
-        stage.setScene(scene);
-        stage.setMinWidth(800);
-        stage.setMinHeight(600);
-		stage.setWidth(800);
-        stage.setHeight(600);
-        stage.show();
-    }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
+	@Override
+	public void start(Stage stage) throws Exception {
+
+		Parent root = FXMLLoader.load(getClass().getResource("/documenttranslator/fxml/MainWindow.fxml"));
+
+		Scene scene = new Scene(root);
+
+		stage.setTitle("Document Translator");
+		stage.setScene(scene);
+		stage.setMinWidth(800);
+		stage.setMinHeight(600);
+		stage.setWidth(800);
+		stage.setHeight(600);
+		stage.show();
+
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			FileTools.deleteFilesRecursive(new File(Prefs.DIR_APP));
+		}));
+	}
+
+	/**
+	 * @param args the command line arguments
+	 */
+	public static void main(String[] args) {
+		launch(args);
+	}
+
 }

@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
+import javafx.scene.control.CheckBox;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -26,6 +29,9 @@ import java.util.Map;
  */
 public class OfficeDocumentProcessor extends BaseProcessor {
 
+	private final Pattern excelSymbolsPattern = Pattern.compile("[ ]+([!$:'])[ ]+");
+	private final CheckBox optionReplaceIncase = new CheckBox("Replace \"In case\" with \" \"");
+	private final CheckBox optionTrimSymbols = new CheckBox("Trim MS Excel Symbols ( $, !, : , ' )");
 	private File tempWorkingDirectory;
 
 	public OfficeDocumentProcessor() {
@@ -40,6 +46,13 @@ public class OfficeDocumentProcessor extends BaseProcessor {
 	@Override
 	public AbstractTask getFindAndReplaceTask(TranslateRequest tr) {
 		return new FindAndReplaceTask(tr);
+	}
+	
+	@Override
+	public void onLoadMoreSettings(VBox moreSettingsPane) {
+		this.optionReplaceIncase.setSelected(true);
+		this.optionTrimSymbols.setSelected(true);
+		moreSettingsPane.getChildren().addAll(this.optionReplaceIncase, this.optionTrimSymbols);
 	}
 
 	private String htmlEncodeExcelSpecialChars(String s) {
@@ -158,6 +171,14 @@ public class OfficeDocumentProcessor extends BaseProcessor {
 
 					String textFind = htmlEncodeExcelSpecialChars(entry.getKey());
 					String textReplace = htmlEncodeExcelSpecialChars(entry.getValue());
+					
+					if(optionReplaceIncase.isSelected() && textReplace.equals("In case")) {
+						textReplace = " ";
+					}
+					if(optionTrimSymbols.isSelected()) {
+						textReplace = textReplace.replaceAll(excelSymbolsPattern.pattern(), "$1");
+					}
+					
 					content = content.replace(textFind, textReplace);
 
 					addLog("\t\tReplacing: " + textFind);
